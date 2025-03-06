@@ -8,8 +8,10 @@ function App() {
   const [count, setCount] = useState(0)
    useEffect(() => {
     async function fetchData() {
-      const response = await axios.post("")
+      const response = await axios.post("https://fake-data-api-ivory.vercel.app/v1/signin", {identifier:"v234", password:"12345678"});
+      alert(response.data)
     }
+    fetchData();
    }, [])
   return (
     <>
