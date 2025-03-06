@@ -7,7 +7,7 @@ import { noteRouter } from "./router/note.router.js";
 const app = express();
 
 const corsOptions = {
-  origin: "https://fake-data-api-wus7.vercel.app/",
+  origin: "https://fake-data-api-wus7.vercel.app",
   credentials: true,
 };
 
