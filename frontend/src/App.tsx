@@ -17,6 +17,16 @@ function App() {
       console.log(error);
     }
   }
+  async function fetchProfile() {
+    try {
+      const response = await axios.get(
+        "https://fake-data-api-ivory.vercel.app/v1/getuser", {withCredentials:true}
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const [count, setCount] = useState(0);
   useEffect(() => {}, []);
@@ -35,6 +45,7 @@ function App() {
         <button
           onClick={() => {
             fetchData();
+            fetchProfile();
             setCount((count) => count + 1);
           }}
         >
