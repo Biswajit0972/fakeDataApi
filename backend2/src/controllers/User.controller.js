@@ -78,7 +78,8 @@ export const loginUser = asyncHandler(async (req, res) => {
   secure: process.env.DEV === "production",    // Sent only over HTTPS
   sameSite: process.env.DEV === "production"? "none"  : "strict", // Prevents CSRF attacks
   path: "/", // Prevents it from being considered as third-party in most cases
-  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  maxAge: 1000 * 60 * 60 * 24 * 7,
+  partitioned: true // 7 days
 };
 
   res
