@@ -48,8 +48,8 @@ export const registerUser = asyncHandler(async (req, res) => {
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
-
   const { identifier,  password } = req.body;
+  console.log(identifier);
 
   if (identifier === "" && password === "") {
     throw new ApiError(401, "You don't have access to the user! please fill all the fields");
@@ -58,7 +58,8 @@ export const loginUser = asyncHandler(async (req, res) => {
   const findUser = await userModel.findOne({
     $or: [{ email: identifier }, { username: identifier }],
   });
-
+  
+  console.log(findUser);
   if (!findUser)
     throw new ApiError(404, "User not found please Sign up before sign in!");
 

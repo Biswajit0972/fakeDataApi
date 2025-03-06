@@ -5,13 +5,19 @@ import './App.css'
 import axios from 'axios'
 
 function App() {
+  async function fetchData() {
+    try {
+      const response = await axios.post("http://localhost:4000/v1/signin", {identifier:"v234", password:"12345678"}, {withCredentials:true});
+      console.log(response);
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
   const [count, setCount] = useState(0)
    useEffect(() => {
-    async function fetchData() {
-      const response = await axios.post("https://fake-data-api-ivory.vercel.app/v1/signin", {identifier:"v234", password:"12345678"});
-      alert(response.data)
-    }
-    fetchData();
+ 
+
    }, [])
   return (
     <>
@@ -25,7 +31,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button onClick={ () => fetchData()}>
           count is {count}
         </button>
         <p>
