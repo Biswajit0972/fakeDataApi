@@ -50,7 +50,6 @@ export const registerUser = asyncHandler(async (req, res) => {
 export const loginUser = asyncHandler(async (req, res) => {
   const { identifier,  password } = req.body;
 
-
   if (identifier === "" && password === "") {
     throw new ApiError(401, "You don't have access to the user! please fill all the fields");
   }
@@ -76,9 +75,10 @@ export const loginUser = asyncHandler(async (req, res) => {
 
  const options = {
   httpOnly: true,  // Accessible only via HTTP(S), not JavaScript
-  secure: true,    // Sent only over HTTPS
-  SameSite: "Strict", // Prevents CSRF attacks
-  path: "/" // Prevents it from being considered as third-party in most cases
+  secure: process.env.DEV === "production",    // Sent only over HTTPS
+  sameSite: process.env.DEV === "production"? "none"  : "strict", // Prevents CSRF attacks
+  path: "/", // Prevents it from being considered as third-party in most cases
+  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
 };
 
   res
