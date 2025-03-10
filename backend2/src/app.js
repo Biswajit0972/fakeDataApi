@@ -6,10 +6,18 @@ import { noteRouter } from "./router/note.router.js";
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://fake-data-api-wus7.vercel.app",
-  credentials: true,
-};
+
+let whitelist = ['https://backend-service-frontend.vercel.app', 'http://localhost:5173']
+let corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+ 
 
 app.use(cors(corsOptions));
 app.use(express.json());
