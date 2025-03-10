@@ -30,20 +30,24 @@ const ApiResponse: FC<ApiResponseProps> = ({
   const handelCall = async () => {
     let data;
     setIsLoading(true);
-    switch (method) {
-      case "GET":
-         data = await getAllData(url)
-        setIsLoading(false);
-        setResponse(data);
-        break;
-      case "POST":
-        break;
-      case "DELETE":
-        break;
-      case "UPDATE":
-        break;
-      default:
-        break;
+    try {
+      switch (method) {
+        case "GET":
+          data = await getAllData(url);
+          setIsLoading(false);
+          setResponse(data);
+          break;
+        case "POST":
+          break;
+        case "DELETE":
+          break;
+        case "UPDATE":
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

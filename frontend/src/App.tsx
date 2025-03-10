@@ -9,7 +9,7 @@ import { userLogin } from "./query/queryFunctions/index.ts";
 function App() {
   useEffect(() => {
     const fakeLogin = async () => {
-      const res = await  userLogin("http://fake-data-api-ivory.vercel.app/v1/signin", {identifier: "v234", password: "12345678"});
+      const res = await  userLogin("https://fake-data-api-ivory.vercel.app/v1/signin", {identifier: "v234", password: "12345678"});
       console.log(res);
     }
     fakeLogin();
