@@ -7,7 +7,7 @@ import { noteRouter } from "./router/note.router.js";
 const app = express();
 
 
-let whitelist = ['https://backend-service-frontend.vercel.app', 'http://localhost:5173', "*"]
+let whitelist = ['https://backend-service-frontend.vercel.app', 'http://localhost:5173']
 let corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -16,7 +16,7 @@ let corsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   },
-  credentials:true,
+  Credential: true
 }
  
 
