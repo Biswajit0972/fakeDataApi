@@ -17,7 +17,7 @@ export const getAllData = async (url: string) => {
 // https://fake-data-api-ivory.vercel.app
 export const userLogin = async() => {
   try {
-    const res = await axios.post("http://localhost:4000/v1/signin", {identifier: "v234", password: "12345678"}, {withCredentials:  true});
+    const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", {identifier: "v234", password: "12345678"}, {withCredentials:  true});
     const {data}: LoginResponse = res.data;
    return data;
   } catch (error:unknown) {

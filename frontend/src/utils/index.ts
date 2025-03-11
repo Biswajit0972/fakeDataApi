@@ -87,7 +87,7 @@ export const userContentData: ContentData[] = [
     {
         id: 2,
         title: "User Login",
-        url: "axios.post('https://fake-data-api-ivory.vercel.app/v1/signin', {identifier: <add your username or email>, password: <enter your password>}, {withCreadentionals:  true})",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/signin', {identifier: <add your username or email>, password: <enter your password>}, {withCreadentionals:  true})",
         method: "POST",
         queryName: "loginUser",
         text: "This endpoint allows registered users to log in and receive authentication tokens.",
