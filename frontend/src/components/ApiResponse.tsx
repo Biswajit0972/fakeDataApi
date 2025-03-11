@@ -1,21 +1,24 @@
 import { FC, useState } from "react";
 import CodeBlock from "./CodeBlock";
 import { ApiResponseProps, contentData, method } from "../type";
-import { getAllData } from "../query/queryFunctions";
+
 const ApiResponse: FC<ApiResponseProps> = ({
   text,
   method = "GET",
   url = "https://backend-service-two.vercel.app/v1/getallnotes",
+  apicall
 }) => {
   const [response, setResponse] = useState<contentData | unknown>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
   const methodColors = (method: method): string => {
     switch (method) {
       case "GET":
         return "bg-green-500";
-      case "POST":
+      case "POST": {
         return "bg-blue-500";
+      }
       case "PUT":
         return "bg-yellow-500";
       case "DELETE":
@@ -27,38 +30,29 @@ const ApiResponse: FC<ApiResponseProps> = ({
     }
   };
 
+  // mange api calls based on their methods and url
   const handelCall = async () => {
     let data;
-    setIsLoading(true);
     try {
-      switch (method) {
-        case "GET":
-          data = await getAllData(url);
-          setIsLoading(false);
-          setResponse(data);
-          break;
-        case "POST":
-          break;
-        case "DELETE":
-          break;
-        case "UPDATE":
-          break;
-        default:
-          break;
-      }
+      setIsLoading(true)
+      data = await apicall();
+      setResponse(data)
     } catch (error) {
-      console.log(error);
+      setResponse(error)
+    }finally{
+      setIsLoading(false)
     }
   };
-
+ 
   return (
     <div className="w-full  p-2  relative overflow-hidden rounded-2xl bg-red-300">
       <div className={`relative overflow-hidden inline-block `}>
         <h1
-          className={`${methodColors(method)} px-3 py-2 rounded-full title-lg`}
+          className={`${methodColors(method)} px-3 py-2 rounded-full title-sm`}
         >
           Method: {method}
         </h1>
+        {/* <h1>{title}</h1> */}
       </div>
       <div className="w-full relative overflow-hidden">
         <p className="text-[16.4px] pt-2">
@@ -66,7 +60,7 @@ const ApiResponse: FC<ApiResponseProps> = ({
         </p>
         <p className="text-[16.4px]">{text}</p>
         <div className="code-block">
-          <CodeBlock code={`fetch("${url}")`} />
+          <CodeBlock code={url} />
         </div>
         <button
           className="bg-green-500 text-white py-2 px-5 rounded-md cursor-pointer"

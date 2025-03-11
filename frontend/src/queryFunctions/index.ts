@@ -1,5 +1,5 @@
 import axios from "axios"
-import { contentAllResponse, loginPayload, LoginResponse } from "../../type";
+import { contentAllResponse, LoginResponse } from "../type";
 
 export const getAllData = async (url: string) => {
   try {
@@ -14,14 +14,15 @@ export const getAllData = async (url: string) => {
     console.log(error);
   }
 }
-
-export const userLogin = async(url: string, payload: loginPayload) => {
+// https://fake-data-api-ivory.vercel.app
+export const userLogin = async() => {
   try {
-    const res = await axios.post(url, payload, {withCredentials:  true});
-    // console.log(res);
+    const res = await axios.post("http://localhost:4000/v1/signin", {identifier: "v234", password: "12345678"}, {withCredentials:  true});
     const {data}: LoginResponse = res.data;
-    console.log(data);
+   return data;
   } catch (error:unknown) {
     console.log(error);
   }
 }
+
+ 

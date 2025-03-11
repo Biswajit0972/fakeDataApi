@@ -16,7 +16,7 @@ let corsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   },
-  Credential: true
+  credentials: true,
 }
  
 

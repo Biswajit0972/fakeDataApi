@@ -4,6 +4,7 @@ export interface ApiResponseProps {
     method: method;
     url: string;
     text:  string;
+    apicall: () => unknown
 }
 
 export interface contentData {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getAllData } from "../queryFunctions"
+import { getAllData } from "../../queryFunctions"
 
 export const useGetContentHook = ({url}: {url:string}) => {
     return useQuery({
