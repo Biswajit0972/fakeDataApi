@@ -72,7 +72,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     "-password",
     "-refreshToken",
   ]);
-
+  // this cors options works on chrome only
  const options = {
   httpOnly: true,  
   secure: process.env.DEV === "production",    
