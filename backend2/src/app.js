@@ -7,20 +7,26 @@ import { noteRouter } from "./router/note.router.js";
 const app = express();
 
 
-// let whitelist = ['https://backend-service-frontend.vercel.app', 'http://localhost:5173']
-// let corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   },
-//   credentials: true,
-// }
- 
+const whitelist = [
+  'https://backend-service-frontend.vercel.app',
+  'http://localhost:5173'
+];
 
-app.use(cors());
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (e.g., server-to-server or Postman)
+    if (!origin || whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200, // Ensures proper handling of preflight requests
+};
+
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
