@@ -1,4 +1,4 @@
-import { userLogin } from "../queryFunctions";
+import { userChangePassword, userLogin, userLogout, userUpdate } from "../queryFunctions";
 import { method } from "../type";
 
 type ContentData = {
@@ -93,30 +93,33 @@ export const userContentData: ContentData[] = [
         text: "This endpoint allows registered users to log in and receive authentication tokens.",
         apiCall: userLogin
     },
-    // {
-    //     id: 3,
-    //     title: "User Logout",
-    //     url: "axios.get('https://fake-data-api-ivory.vercel.app/v1/logout')",
-    //     method: "GET",
-    //     queryName: "logOut",
-    //     text: "This endpoint logs out an authenticated user by clearing the session or token."
-    // },
-    // {
-    //     id: 4,
-    //     title: "Update User Profile",
-    //     url: "axios.post('https://fake-data-api-ivory.vercel.app/v1/updateprofile')",
-    //     method: "POST",
-    //     queryName: "updateUser",
-    //     text: "This endpoint allows authenticated users to update their profile details."
-    // },
-    // {
-    //     id: 5,
-    //     title: "Change User Password",
-    //     url: "axios.post('https://fake-data-api-ivory.vercel.app/v1/changepassword')",
-    //     method: "POST",
-    //     queryName: "changeUserPassword",
-    //     text: "This endpoint allows authenticated users to change their password securely."
-    // },
+    {
+        id: 3,
+        title: "User Logout",
+        url: "axios.get('https://fake-data-api-ivory.vercel.app/v1/logout')",
+        method: "GET",
+        queryName: "logOut",
+        text: "This endpoint logs out an authenticated user by clearing the session or token.",
+        apiCall: userLogout,
+    },
+    {
+        id: 4,
+        title: "Update User Profile",
+        url: "axios.post('https://fake-data-api-ivory.vercel.app/v1/updateprofile', {fullname: `roni`,username:  `ronit45`,}, {withCredentials: true})",
+        method: "POST",
+        queryName: "updateUser",
+        text: "This endpoint allows authenticated users to update their profile details.",
+        apiCall: userUpdate,
+    },
+    {
+        id: 5,
+        title: "Change User Password",
+        url: "axios.post('https://fake-data-api-ivory.vercel.app/v1/changepassword')",
+        method: "POST",
+        queryName: "changeUserPassword",
+        text: "This endpoint allows authenticated users to change their password securely.",
+        apiCall: userChangePassword,
+    },
     // {
     //     id: 6,
     //     title: "Get User Data",

@@ -92,6 +92,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
 export const logOut = asyncHandler(async (req, res) => {
   const userId = req?.user;
+  
   await userModel.findByIdAndUpdate(
     userId,
     {
@@ -113,8 +114,8 @@ export const logOut = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .cookie("refreshToken", options)
-    .cookie("accessToken", options)
+    .cookie("refreshToken","" , options)
+    .cookie("accessToken","" ,options)
     .status(200)
     .send(new ApiResponse(200, "logOut successfully", "", true));
 });
@@ -122,18 +123,14 @@ export const logOut = asyncHandler(async (req, res) => {
 export const updateUser = asyncHandler(async (req, res) => {
   const userId = req?.user;
   const { fullName, username } = req.body;
-  const updateUser = await userModel.findByIdAndUpdate(
-    userId,
-    {
-      fullName,
-      username,
-    },
-    {
-      new: true,
-    }
-  );
+  
+  if (!fullName  || !username) {
+    throw new ApiError(400, "atleast provide a field to update user")
+  }
+  const updateUser = await userModel.findOneAndUpdate({_id: userId}, {fullName, username
+  }, {new: true})
 
-  const { refreshToken, accessToken } = await genarateTokens(updateUser?._id);
+  const { refreshToken, accessToken } = await generateTokens(updateUser?._id);
 
   const sendUser = await userModel.findById(updateUser?._id).select([
     "-password",
