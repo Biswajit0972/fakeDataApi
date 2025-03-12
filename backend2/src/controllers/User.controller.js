@@ -175,11 +175,11 @@ export const changeUserPassword = asyncHandler(async (req, res) => {
 
 export const getUserData = asyncHandler(async (req, res) => {
   const userId = req.user;
-
+  const userIDQuery = req.query.id
   const userProfile = await userModel.aggregate([
     {
       $match: {
-        _id: userId,
+        _id: userId || userIDQuery,
       },
     },
     {
