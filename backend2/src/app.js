@@ -8,7 +8,7 @@ const app = express();
 
 
 const whitelist = [
-  'https://backend-service-frontend.vercel.app',
+  'https://fake-data-api-wus7.vercel.app',
   'http://localhost:5173'
 ];
 
