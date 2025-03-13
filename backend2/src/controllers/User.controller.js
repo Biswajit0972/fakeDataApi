@@ -109,7 +109,6 @@ export const logOut = asyncHandler(async (req, res) => {
     httpOnly: true,  
     secure: process.env.DEV === "production",    
     sameSite: process.env.DEV === "production"? "none"  : "strict", 
-    maxAge: 1000 * 60 * 60 * 24 * 7,
   };
 
   res
