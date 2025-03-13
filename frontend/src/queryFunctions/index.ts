@@ -1,11 +1,11 @@
 import axios from "axios"
 import { LoginResponse } from "../type";
 import { asyncHandler } from "../utils/Server";
-
+const currentUser = Date.now();
 
 
 export const userLogin = asyncHandler(async () => { // working
-  const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", { identifier: "v234", password: "12345678" }, { withCredentials: true });
+  const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", { identifier: String(currentUser), password: "12345678" }, { withCredentials: true });
   const { data }: LoginResponse = res.data;
 
   return data;
@@ -13,7 +13,7 @@ export const userLogin = asyncHandler(async () => { // working
 
 
 export const userSignup = asyncHandler(async () => { // working
-  const currentUser = Date.now();
+  
   const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signup", {
     fullName: "I am new User",
     username: String(currentUser),
