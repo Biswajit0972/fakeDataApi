@@ -159,7 +159,7 @@ export const changeUserPassword = asyncHandler(async (req, res) => {
     throw new ApiError(401, "You don't have access to the user!");
   }
 
-  const isValidUser = await user.ispasswordCorrect(oldPassword);
+  const isValidUser = await user.isPasswordCorrect(oldPassword);
   
   if (!isValidUser) {
     throw new ApiError(401, "You don't have access to the user!");
