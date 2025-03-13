@@ -127,7 +127,7 @@ export const seeAllNotesByUserId = asyncHandler(async (req, res) => {
 export const getNotes = asyncHandler(async (req, res) => {
 
   const {page,limit} = req.query;
-
+  // console.log("hit");
   const pageNum = page || 1;
   const limitNum = limit || 3;
 

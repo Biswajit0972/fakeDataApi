@@ -4,6 +4,7 @@ import asyncHandler from "../utils/AsyncHandler.js";
 import { userModel } from "../models/user.models.js";
 
 const verifyAuth = asyncHandler(async (req, res, next) => {
+ 
   // Get the token from cookies or Authorization header
   const token =
     req.cookies?.accessToken ||

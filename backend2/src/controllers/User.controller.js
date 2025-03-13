@@ -21,7 +21,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, username, password } = req.body;
 
   if (
-    [fullName, email, username, password].some((field) => field?.trim() === "")
+    [fullName, email, username, password].some((field) => field.trim() === "")
   ) {
     throw new ApiError(400, "all fields are required! ");
   }
@@ -49,7 +49,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 export const loginUser = asyncHandler(async (req, res) => {
   const { identifier,  password } = req.body;
-
+ 
   if (identifier === "" && password === "") {
     throw new ApiError(401, "You don't have access to the user! please fill all the fields");
   }
@@ -58,7 +58,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     $or: [{ email: identifier }, { username: identifier }],
   });
 
-
+  
   if (!findUser)
     throw new ApiError(404, "User not found please Sign up before sign in!");
 
@@ -76,7 +76,7 @@ export const loginUser = asyncHandler(async (req, res) => {
  const options = {
   httpOnly: true,  
   secure: process.env.DEV === "production",    
-  sameSite: process.env.DEV === "production"? "strict"  : "none", 
+  sameSite: process.env.DEV === "production"? "none"  : "strict", 
   maxAge: 1000 * 60 * 60 * 24 * 7,
 };
 
@@ -176,6 +176,7 @@ export const changeUserPassword = asyncHandler(async (req, res) => {
 export const getUserData = asyncHandler(async (req, res) => {
   const userId = req.user;
   const userIDQuery = req.query.id
+  console.log(userIDQuery);
   const userProfile = await userModel.aggregate([
     {
       $match: {
