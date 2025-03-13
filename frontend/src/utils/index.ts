@@ -1,4 +1,5 @@
-import {  createNewNote, deleteNotebyId, getAllNotes, getNotesbyUserID, updateNotebyId, userChangePassword, userLogin, userLogout, userProfile, userSignup, userUpdate } from "../queryFunctions";
+import {  createNewNote, deleteNotebyId, getAllNotes, getNotesbyUserID, getUserbyId, updateNotebyId, userChangePassword, userLogin, userLogout, userProfile, userSignup, userUpdate } from "../queryFunctions";
+
 import { method } from "../type";
 
 type ContentData = {
@@ -83,7 +84,7 @@ export const userContentData: ContentData[] = [
     {
         id: 1,
         title: "User Signup",
-        url: "axios.post('https://fake-data-api-backend.vercel.apphttps://fake-data-api-backend.vercel.app/v1/signup', {username: <add your username>, fullname:  <add your username>, password: <add your 8 digit or greater then 8 password>, gmail: <add your gmail>})",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/signup', {username: <add your username>, fullname:  <add your username>, password: <add your 8 digit or greater then 8 password>, gmail: <add your gmail>})",
         method: "POST",
         queryName: "registerUser",
         text: "This endpoint allows new users to register by providing their details.",
@@ -92,7 +93,7 @@ export const userContentData: ContentData[] = [
     {
         id: 2,
         title: "User Login",
-        url: "axios.post('https://fake-data-api-backend.vercel.apphttps://fake-data-api-backend.vercel.app/v1/signin', {identifier: <add your username or email>, password: <enter your password>}, {withCreadentionals:  true})",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/signin', {identifier: <add your username or email>, password: <enter your password>}, {withCreadentionals:  true})",
         method: "POST",
         queryName: "loginUser",
         text: "This endpoint allows registered users to log in and receive authentication tokens.",
@@ -110,7 +111,7 @@ export const userContentData: ContentData[] = [
     {
         id: 4,
         title: "Update User Profile",
-        url: "axios.post('https://fake-data-api-backend.vercel.apphttps://fake-data-api-backend.vercel.app/v1/updateprofile', {fullname: `roni`,username:  `ronit45`,}, {withCredentials: true})",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/updateprofile', {fullname: `roni`,username:  `ronit45`,}, {withCredentials: true})",
         method: "POST",
         queryName: "updateUser",
         text: "This endpoint allows authenticated users to update their profile details.",
@@ -119,7 +120,7 @@ export const userContentData: ContentData[] = [
     {
         id: 5,
         title: "Change User Password",
-        url: "axios.post('https://fake-data-api-backend.vercel.apphttps://fake-data-api-backend.vercel.app/v1/changepassword')",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/changepassword')",
         method: "POST",
         queryName: "changeUserPassword",
         text: "This endpoint allows authenticated users to change their password securely.",
@@ -128,7 +129,7 @@ export const userContentData: ContentData[] = [
     {
         id: 6,
         title: "Get User Data",
-        url: "axios.get('https://fake-data-api-backend.vercel.apphttps://fake-data-api-backend.vercel.app/v1/getuser')",
+        url: "axios.get('https://fake-data-api-backend.vercel.app/v1/getuser')",
         method: "GET",
         queryName: "getUserData",
         text: "This endpoint retrieves details of the authenticated user.",
@@ -137,10 +138,10 @@ export const userContentData: ContentData[] = [
     {
         id: 7,
         title: "Get User by id",
-        url: "axios.get('https://fake-data-api-backend.vercel.apphttps://fake-data-api-backend.vercel.app/v1/getuser?id=<add userid>')",
+        url: "axios.get('https://fake-data-api-backend.vercel.app/v1/getuser?id=<add userid>')",
         method: "GET",
         queryName: "getUserData",
         text: "This endpoint retrieves details of the authenticated user.",
-        apiCall: userProfile,
+        apiCall: getUserbyId,
     }
 ];

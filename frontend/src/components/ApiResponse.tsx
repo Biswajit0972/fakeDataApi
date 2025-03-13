@@ -32,16 +32,10 @@ const ApiResponse: FC<ApiResponseProps> = ({
 
   // mange api calls based on their methods and url
   const handelCall = async () => {
-    let data;
-    try {
-      setIsLoading(true)
-      data = await apicall();
+    
+    setIsLoading(true)
+      const data = await apicall();
       setResponse(data)
-    } catch (error) {
-      setResponse(error)
-    }finally{
-      setIsLoading(false)
-    }
   };
  
   return (
