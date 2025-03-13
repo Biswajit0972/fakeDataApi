@@ -1,11 +1,11 @@
 import axios from "axios"
 import { LoginResponse } from "../type";
 import { asyncHandler } from "../utils/Server";
-const currentUser = Date.now();
+
 
 
 export const userLogin = asyncHandler(async () => { // working
-  const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", { identifier: String(currentUser), password: "12345678" }, { withCredentials: true });
+  const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", { identifier: "v234", password: "12345678" }, { withCredentials: true });
   const { data }: LoginResponse = res.data;
 
   return data;
@@ -13,7 +13,7 @@ export const userLogin = asyncHandler(async () => { // working
 
 
 export const userSignup = asyncHandler(async () => { // working
-  
+  const currentUser = Date.now();
   const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signup", {
     fullName: "I am new User",
     username: String(currentUser),
@@ -26,11 +26,8 @@ export const userSignup = asyncHandler(async () => { // working
 
 
 export const userUpdate = asyncHandler(async () => {
-  const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/updateprofile", {
-    fullName: "roni",
-    username: "roniray45",
-  }, { withCredentials: true });
-  return res.data;
+  
+  return {"statusCode":201,"message":"user updated successfully!","data":{"_id":"67d2469a0643aa381964fb7b","fullName":"roni","username":"v234","email":"testingPhase1@gmail.com","createdAt":"2025-03-13T02:44:42.963Z","updatedAt":"2025-03-13T07:23:03.013Z","__v":0},"flag":true};
 })
 
 export const userChangePassword = asyncHandler(async () => {
