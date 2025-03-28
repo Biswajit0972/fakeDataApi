@@ -10,7 +10,7 @@ const app = express();
 const whitelist = [
   'https://fake-data-api-wus7.vercel.app',
   'http://localhost:5173',
-  `*`,
+  `https://algo-root-assignment.vercel.app`,
 ];
 
 const corsOptions = {
