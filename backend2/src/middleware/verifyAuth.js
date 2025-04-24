@@ -1,14 +1,14 @@
 import jwt from "jsonwebtoken";
-import { ApiError } from "../utils/ApiError.js";
+import {ApiError} from "../utils/ApiError.js";
 import asyncHandler from "../utils/AsyncHandler.js";
-import { userModel } from "../models/user.models.js";
+import {userModel} from "../models/user.models.js";
 
 const verifyAuth = asyncHandler(async (req, res, next) => {
  
   // Get the token from cookies or Authorization header
   const token =
-    req.cookies?.accessToken ||
-    req.header("Authorization")?.replace("Bearer ", "");
+      req.header("Authorization")?.replace("Bearer ", "") || req.cookies?.accessToken
+  ;
 
   // If no token is found, throw an unauthorized error
   if (!token) {
