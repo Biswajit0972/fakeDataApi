@@ -7,7 +7,7 @@ import { asyncHandler } from "../utils/Server";
 export const userLogin = asyncHandler(async () => { // working
   const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", { identifier: "v234", password: "12345678" }, { withCredentials: true });
   const { data }: LoginResponse = res.data;
-
+  localStorage.setItem("auth", data.accessToken);
   return data;
 });
 
@@ -31,15 +31,22 @@ export const userUpdate = asyncHandler(async () => {
 })
 
 export const userChangePassword = asyncHandler(async () => {
+  const token = localStorage.getItem("auth");
+
   const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/changepassword", {
     newPassword: "12345678",
     oldPassword: "12345678"
-  }, { withCredentials: true });
+  }, {headers: {
+    Authorization: `Bearer ${token}`
+    }, withCredentials: true });
   return res.data;
 })
 
 export const userProfile = asyncHandler(async () => {
-  const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/getuser", { withCredentials: true });
+  const token = localStorage.getItem("auth");
+  const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/getuser", {headers: {
+      Authorization: `Bearer ${token}`
+    }, withCredentials: true });
   return res.data;
 })
 export const userLogout = asyncHandler(async () => {
