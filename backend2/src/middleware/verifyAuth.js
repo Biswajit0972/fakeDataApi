@@ -7,8 +7,7 @@ const verifyAuth = asyncHandler(async (req, res, next) => {
  
   // Get the token from cookies or Authorization header
   const token =
-      req.header("Authorization")?.replace("Bearer ", "") || req.cookies?.accessToken
-  ;
+      req.header("Authorization")?.replace("Bearer ", "") || req.cookies?.accessToken;
 
   // If no token is found, throw an unauthorized error
   if (!token) {

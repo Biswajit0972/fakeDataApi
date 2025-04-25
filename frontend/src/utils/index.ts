@@ -1,6 +1,14 @@
-import {  createNewNote, deleteNotebyId, getAllNotes, getNotesbyUserID, getUserbyId, updateNotebyId, userChangePassword, userLogin, userLogout, userProfile, userSignup, userUpdate } from "../queryFunctions";
+import {  createNewNote, deleteNotebyId, getAllNotes, getNotesbyUserID,  updateNotebyId } from "../queryFunctions";
 
 import { method } from "../type";
+import {useCreateUser,
+    useUserLogin,
+    useLogout,
+    useUpdateUser,
+    useChangePassword,
+    useGetUserProfile,
+    useGetUserById} from "../hooks/customQueryHooks";
+import { UseMutateFunction } from "@tanstack/react-query";
 
 type ContentData = {
     id: number,
@@ -10,6 +18,23 @@ type ContentData = {
     queryName: string,
     method: method,
     apiCall: () => unknown
+}
+
+
+export type CustomMutationHook<TData = unknown, TVariables = void> = {
+    mutateAsync: UseMutateFunction<TData, Error, TVariables>;
+    isPending: boolean;
+    data?: TData;
+};
+
+type ContentData2 = {
+    id: number,
+    title: string,
+    url: string,
+    text: string,
+    queryName: string,
+    method: method,
+    useApiCall: () => CustomMutationHook;
 }
 
 export const contentData: ContentData[] = [
@@ -80,7 +105,7 @@ export const NavUrl: Nav[] = [
     }
 ]
 
-export const userContentData: ContentData[] = [
+export const userContentData: ContentData2[] = [
     {
         id: 1,
         title: "User Signup",
@@ -88,7 +113,7 @@ export const userContentData: ContentData[] = [
         method: "POST",
         queryName: "registerUser",
         text: "This endpoint allows new users to register by providing their details.",
-        apiCall: userSignup,
+        useApiCall: useCreateUser,
     },
     {
         id: 2,
@@ -97,7 +122,7 @@ export const userContentData: ContentData[] = [
         method: "POST",
         queryName: "loginUser",
         text: "This endpoint allows registered users to log in and receive authentication tokens.",
-        apiCall: userLogin
+        useApiCall: useUserLogin,
     },
     {
         id: 3,
@@ -106,7 +131,7 @@ export const userContentData: ContentData[] = [
         method: "GET",
         queryName: "logOut",
         text: "This endpoint logs out an authenticated user by clearing the session or token.",
-        apiCall: userLogout,
+        useApiCall: useLogout,
     },
     {
         id: 4,
@@ -115,7 +140,7 @@ export const userContentData: ContentData[] = [
         method: "POST",
         queryName: "updateUser",
         text: "This endpoint allows authenticated users to update their profile details.",
-        apiCall: userUpdate,
+        useApiCall: useUpdateUser,
     },
     {
         id: 5,
@@ -124,7 +149,7 @@ export const userContentData: ContentData[] = [
         method: "POST",
         queryName: "changeUserPassword",
         text: "This endpoint allows authenticated users to change their password securely.",
-        apiCall: userChangePassword,
+        useApiCall: useChangePassword,
     },
     {
         id: 6,
@@ -133,7 +158,7 @@ export const userContentData: ContentData[] = [
         method: "GET",
         queryName: "getUserData",
         text: "This endpoint retrieves details of the authenticated user.",
-        apiCall: userProfile,
+        useApiCall: useGetUserProfile,
     },
     {
         id: 7,
@@ -142,6 +167,6 @@ export const userContentData: ContentData[] = [
         method: "GET",
         queryName: "getUserData",
         text: "This endpoint retrieves details of the authenticated user.",
-        apiCall: getUserbyId,
+        useApiCall: useGetUserById,
     }
 ];
