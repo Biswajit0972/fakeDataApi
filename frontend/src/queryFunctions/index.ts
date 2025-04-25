@@ -74,6 +74,7 @@ export const userLogout = asyncHandler(async () => {
                 Authorization: `Bearer ${token}`,
             }, withCredentials: true
         });
+        localStorage.removeItem("auth");
         return res.data;
     }
 )
