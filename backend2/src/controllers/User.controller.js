@@ -1,211 +1,208 @@
 import asyncHandler from "../utils/AsyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { userModel } from "../models/user.models.js";
+import {ApiError} from "../utils/ApiError.js";
+import {userModel} from "../models/user.models.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 
 const generateTokens = async (userId) => {
-  try {
-    const User = await userModel.findById(userId);
-    const refreshToken = User.generateRefreshToken();
-    const accessToken = User.generateAccessToken();
-    User.refreshToken = refreshToken;
-    User.save({ validateBeforeSave: false });
+    try {
+        const User = await userModel.findById(userId);
+        const refreshToken = User.generateRefreshToken();
+        const accessToken = User.generateAccessToken();
+        User.refreshToken = refreshToken;
+        User.save({validateBeforeSave: false});
 
-    return { refreshToken, accessToken };
-  } catch (err) {
-    throw new ApiError(500, "Something want's Wrong");
-  }
+        return {refreshToken, accessToken};
+    } catch (err) {
+        throw new ApiError(500, "Something want's Wrong");
+    }
 };
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const { fullName, email, username, password } = req.body;
+    const {fullName, email, username, password} = req.body;
 
-  if (
-    [fullName, email, username, password].some((field) => field.trim() === "")
-  ) {
-    throw new ApiError(400, "all fields are required! ");
-  }
+    if (
+        [fullName, email, username, password].some((field) => field.trim() === "")
+    ) {
+        throw new ApiError(400, "all fields are required! ");
+    }
 
-  const userIsexsits = await userModel.findOne({
-    $or: [{ email }, { username }],
-  });
+    const userIsexsits = await userModel.findOne({
+        $or: [{email}, {username}],
+    });
 
-  if (userIsexsits) throw new ApiError(409, "User is already registered");
+    if (userIsexsits) throw new ApiError(409, "User is already registered");
 
-  const newUser = await userModel.create({ fullName, email, username, password });
+    const newUser = await userModel.create({fullName, email, username, password});
 
-  if (!newUser)
-    throw new ApiError(400, "Something went's wrong, while creating user!");
+    if (!newUser)
+        throw new ApiError(400, "Something went's wrong, while creating user!");
 
-  const { _id: id } = newUser;
+    const {_id: id} = newUser;
 
-  const updatedUser = await userModel.findById(id).select([
-    "-password",
-    "-refreshToken",
-  ]);
+    const updatedUser = await userModel.findById(id).select([
+        "-password",
+        "-refreshToken",
+    ]);
 
-  res.status(200).send(new ApiResponse(200, "new user created", updatedUser));
+    res.status(200).send(new ApiResponse(200, "new user created", updatedUser));
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
-  const { identifier,  password } = req.body;
- 
-  if (identifier === "" && password === "") {
-    throw new ApiError(401, "You don't have access to the user! please fill all the fields");
-  }
+    const {identifier, password} = req.body;
 
-  const findUser = await userModel.findOne({
-    $or: [{ email: identifier }, { username: identifier }],
-  });
+    if (identifier === "" && password === "") {
+        throw new ApiError(401, "You don't have access to the user! please fill all the fields");
+    }
 
-  
-  if (!findUser)
-    throw new ApiError(404, "User not found please Sign up before sign in!");
+    const findUser = await userModel.findOne({
+        $or: [{email: identifier}, {username: identifier}],
+    });
 
-  const verifyPassword = findUser.isPasswordCorrect(password);
 
-  if (!verifyPassword) throw new ApiError(404, "Invalid candidate");
+    if (!findUser)
+        throw new ApiError(404, "User not found please Sign up before sign in!");
 
-  const { refreshToken, accessToken } = await generateTokens(findUser._id);
+    const verifyPassword = findUser.isPasswordCorrect(password);
 
-  const updateUser = await userModel.findById(findUser._id).select([
-    "-password",
-    "-refreshToken",
-  ]);
-  // this cors options works on chrome only
- const options = {
-  httpOnly: true,  
-  secure: process.env.DEV === "production",    
-  sameSite: process.env.DEV === "production"? "None"  : "Strict",
-  maxAge: 1000 * 60 * 60 * 24 * 7,
-};
+    if (!verifyPassword) throw new ApiError(404, "Invalid candidate");
 
-  res
-    .status(200)
-    .cookie("refreshToken", refreshToken, options)
-    .cookie("accessToken", accessToken, options)
-    .send(new ApiResponse(201, "user login successful!", {
-      user: updateUser,
-      accessToken,
-    }));
+    const {accessToken} = await generateTokens(findUser._id);
+
+    const updateUser = await userModel.findById(findUser._id).select([
+        "-password",
+        "-refreshToken",
+    ]);
+    // this cors options works on chrome only
+    const options = {
+        httpOnly: true,
+        secure: process.env.DEV === "production",
+        sameSite: process.env.DEV === "production" ? "None" : "Strict",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    };
+
+    // not sharing cookies because our api will be used as cross site useges, so browser can remove our cookie, this reason our authentication system will be failed.
+    res
+        .status(200)
+        .send(new ApiResponse(201, "user login successful!", {
+            user: updateUser,
+            accessToken,
+        }));
 });
 
 export const logOut = asyncHandler(async (req, res) => {
-  const userId = req?.user;
-  
-  await userModel.findByIdAndUpdate(
-    userId,
-    {
-      $unset: {
-        refreshToken: 1,
-      },
-    },
-    {
-      new: true,
-    }
-  );
+    const userId = req?.user;
 
-  const options = {
-    httpOnly: true,  
-    secure: process.env.DEV === "production",    
-    sameSite: process.env.DEV === "production"? "none"  : "strict", 
-  };
+    await userModel.findByIdAndUpdate(
+        userId,
+        {
+            $unset: {
+                refreshToken: 1,
+            },
+        },
+        {
+            new: true,
+        }
+    );
 
-  res
-    .status(200)
-    .cookie("refreshToken","" , options)
-    .cookie("accessToken","" ,options)
-    .status(200)
-    .send(new ApiResponse(200, "logOut successfully", "", true));
+    const options = {
+        httpOnly: true,
+        secure: process.env.DEV === "production",
+        sameSite: process.env.DEV === "production" ? "none" : "strict",
+    };
+
+    res
+        .status(200)
+        .send(new ApiResponse(200, "logOut successfully", "", true));
 });
 
 export const updateUser = asyncHandler(async (req, res) => {
-  const userId = req?.user;
-  const { fullName, username } = req.body;
-  
-  if (!fullName  || !username) {
-    throw new ApiError(400, "atleast provide a field to update user")
-  }
-  const updateUser = await userModel.findOneAndUpdate({_id: userId}, {fullName, username
-  }, {new: true})
+    const userId = req?.user;
+    const {fullName, username} = req.body;
 
-  const { refreshToken, accessToken } = await generateTokens(updateUser?._id);
+    if (!fullName || !username) {
+        throw new ApiError(400, "atleast provide a field to update user")
+    }
+    const updateUser = await userModel.findOneAndUpdate({_id: userId}, {
+        fullName, username
+    }, {new: true})
 
-  const sendUser = await userModel.findById(updateUser?._id).select([
-    "-password",
-    "-refreshToken",
-  ]);
+    const {refreshToken, accessToken} = await generateTokens(updateUser?._id);
 
-  const options = {
-    httpOnly: true,
-    secure: true,
-    sameSite: "None",
-  };
+    const sendUser = await userModel.findById(updateUser?._id).select([
+        "-password",
+        "-refreshToken",
+    ]);
 
-  res
-    .status(200)
-    .cookie("refreshToken", refreshToken, options)
-    .cookie("accessToken", accessToken, options)
-    .send(new ApiResponse(201, "user updated successfully!", sendUser, true));
+    const options = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+    };
+
+    res
+        .status(200)
+        .cookie("refreshToken", refreshToken, options)
+        .cookie("accessToken", accessToken, options)
+        .send(new ApiResponse(201, "user updated successfully!", sendUser, true));
 });
 
 export const changeUserPassword = asyncHandler(async (req, res) => {
-  const userId = req?.user;
-  const {  newPassword, oldPassword } = req.body;
+    const userId = req?.user;
+    const {newPassword, oldPassword} = req.body;
 
-  const user = await userModel.findById(userId);
+    const user = await userModel.findById(userId);
 
-  if(!user._id) {
-    throw new ApiError(401, "You don't have access to the user!");
-  }
+    if (!user._id) {
+        throw new ApiError(401, "You don't have access to the user!");
+    }
 
-  const isValidUser = await user.isPasswordCorrect(oldPassword);
-  
-  if (!isValidUser) {
-    throw new ApiError(401, "You don't have access to the user!");
-  }
+    const isValidUser = await user.isPasswordCorrect(oldPassword);
 
-  user.password = newPassword;
+    if (!isValidUser) {
+        throw new ApiError(401, "You don't have access to the user!");
+    }
 
-  await user.save({ validateBeforeSave: false });
+    user.password = newPassword;
 
-  res.status(202).send(new ApiResponse(200, "password  changed successfully!"));
+    await user.save({validateBeforeSave: false});
+
+    res.status(202).send(new ApiResponse(200, "password  changed successfully!"));
 });
 
 export const getUserData = asyncHandler(async (req, res) => {
-  const userId = req.user;
-  const userIDQuery = req.query.id
-  console.log(userIDQuery);
-  const userProfile = await userModel.aggregate([
-    {
-      $match: {
-        _id: userId || userIDQuery,
-      },
-    },
-    {
-      $lookup: {
-        from: "notes",
-        localField: "_id",
-        foreignField: "userId",
-        as: "allpost",
-      },
-    },
-    {
-      $addFields: {
-        totalNotes: {
-          $size: "$allpost",
+    const userId = req.user;
+    const userIDQuery = req.query.id
+    console.log(userIDQuery);
+    const userProfile = await userModel.aggregate([
+        {
+            $match: {
+                _id: userId || userIDQuery,
+            },
         },
-      },
-    },
-    {
-      $project: {
-        _id: 1,
-        fullname: 1,
-        username: 1,
-        email: 1,
-        totalNotes: 1,
-      },
-    },
-  ]);
-  res.status(200).send(new ApiResponse(201, "", userProfile, true));
+        {
+            $lookup: {
+                from: "notes",
+                localField: "_id",
+                foreignField: "userId",
+                as: "allpost",
+            },
+        },
+        {
+            $addFields: {
+                totalNotes: {
+                    $size: "$allpost",
+                },
+            },
+        },
+        {
+            $project: {
+                _id: 1,
+                fullname: 1,
+                username: 1,
+                email: 1,
+                totalNotes: 1,
+            },
+        },
+    ]);
+    res.status(200).send(new ApiResponse(201, "", userProfile, true));
 });
