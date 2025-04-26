@@ -1,3 +1,4 @@
+import {NavLink} from "react-router";
 
 const Home = () => {
     
@@ -6,7 +7,9 @@ const Home = () => {
             <div className="w-full max-w-screen relative h-full">
                 <div className="child-box  flex flex-col gap-2">
                     <div className="w-full overflow-hidden ">
-                        <h1 className="title">Fake CURD Backend Provider</h1>
+                        <h1 className="title">
+                            <NavLink to="">Fake CURD Backend Provider</NavLink>
+                        </h1>
                     </div>
                     <div className="w-full overflow-hidden">
                         <h4 className="sub-txt">

@@ -90,21 +90,11 @@ axios.get("https://fake-data-api-backend.vercel.app/v1/logout", {
 Updates user's profile info.
 
 ```ts
-// Example response
-{
-  "statusCode": 201,
-  "message": "user updated successfully!",
-  "data": {
-    "_id": "67d2469a0643aa381964fb7b",
-    "fullName": "roni",
-    "username": "v234",
-    "email": "testingPhase1@gmail.com",
-    "createdAt": "...",
-    "updatedAt": "...",
-    "__v": 0
-  },
-  "flag": true
-}
+axios.post('https://fake-data-api-backend.vercel.app/v1/updateprofile', {
+    fullname: `roni`,
+    username: `ronit45`,
+}, {headers: {Authorization: `Bearer ${token}`});
+
 ```
 
 ---
