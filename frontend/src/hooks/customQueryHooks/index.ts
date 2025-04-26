@@ -2,7 +2,17 @@
 // create new userHook
 
 import {useMutation} from "@tanstack/react-query";
-import {userSignup, userLogin, userUpdate,userChangePassword, userLogout,getUserbyId,getNotesbyUserID,userProfile} from "../../queryFunctions";
+import {
+    userSignup,
+    userLogin,
+    userUpdate,
+    userChangePassword,
+    userLogout,
+    getUserbyId,
+    getNotesbyUserID,
+    userProfile,
+    getAllNotes, createNewNote
+} from "../../queryFunctions";
 import {toast} from "react-toastify";
 
 
@@ -80,3 +90,43 @@ export const useGetNotesByUser = () => {
 
     return { userNotes, isPending, mutateAsync };
 };
+
+// START CONTENT HOOKS HERE
+
+export const useGetAllConetent = () => {
+    const {isPending, data, isError, error , mutateAsync} = useMutation({
+            mutationFn: getAllNotes,
+    });
+
+    return { isPending, data, isError, error, mutateAsync };
+};
+
+export const useCreateContent = () => {
+    const {isPending, data, isError, error , mutateAsync} = useMutation({
+        mutationFn: createNewNote,
+        onSuccess: () => toast.success("New  data  successfully stored!"),
+        onError: (err) => toast.error(err.message || "Logout failed"),
+    });
+
+    return { isPending, data, isError, error, mutateAsync };
+}
+
+export const useUpdateContent = () => {
+    const {isPending, data, isError, error , mutateAsync} = useMutation({
+        mutationFn: createNewNote,
+        onSuccess: () => toast.success("New  data  successfully stored!"),
+        onError: (err) => toast.error(err.message || "Logout failed"),
+    });
+
+    return { isPending, data, isError, error, mutateAsync };
+}
+
+export const useGetALlNotesByUserId = () => {
+    const {isPending, data, isError, error , mutateAsync} = useMutation({
+        mutationFn: createNewNote,
+        onSuccess: () => toast.success(" content found successfully"),
+        onError: (err) => toast.error(err.message || "Logout failed"),
+    });
+
+    return { isPending, data, isError, error, mutateAsync };
+}
