@@ -6,11 +6,11 @@ const Home = () => {
         <div className="h-full w-full relative">
             <div className="w-full max-w-screen relative h-full">
                 <div className="child-box  flex flex-col gap-2">
-                    <div className="w-full overflow-hidden ">
-                        <h1 className="title flex-between gap-3">
+                    <div className="w-full overflow-hidden flex-between gap-3">
+                        <h1 className="title ">
                             Fake CURD Backend Provider
-                            <NavLink to="https://github.com/Biswajit0972/fakeDataApi/blob/main/readme.md">Github Repo</NavLink>
                         </h1>
+                            <NavLink  className="sub-txt text-blue-500" to="https://github.com/Biswajit0972/fakeDataApi/blob/main/readme.md">Github Repo</NavLink>
                     </div>
                     <div className="w-full overflow-hidden">
                         <h4 className="sub-txt">
