@@ -93,7 +93,7 @@ Updates user's profile info.
 axios.post('https://fake-data-api-backend.vercel.app/v1/updateprofile', {
     fullname: `roni`,
     username: `ronit45`,
-}, {headers: {Authorization: `Bearer ${token}`});
+}, {headers: {Authorization: `Bearer ${token}`},);
 
 ```
 
