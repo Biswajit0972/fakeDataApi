@@ -7,8 +7,9 @@ const Home = () => {
             <div className="w-full max-w-screen relative h-full">
                 <div className="child-box  flex flex-col gap-2">
                     <div className="w-full overflow-hidden ">
-                        <h1 className="title">
-                            <NavLink to="">Fake CURD Backend Provider</NavLink>
+                        <h1 className="title flex-between gap-3">
+                            Fake CURD Backend Provider
+                            <NavLink to="https://github.com/Biswajit0972/fakeDataApi/blob/main/readme.md">Github Repo</NavLink>
                         </h1>
                     </div>
                     <div className="w-full overflow-hidden">
