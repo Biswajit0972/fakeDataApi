@@ -82,8 +82,9 @@ export const userLogout = asyncHandler(async () => {
 export const getUserbyId = asyncHandler(async () => { // working
     const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/getuser?id=67d2469a0643aa381964fb7b", {withCredentials: true});
     return res.data;
-})
-// notes functions
+});
+
+// Notes function starts here
 
 export const getAllNotes = asyncHandler(async () => {
     const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/getallnotes");

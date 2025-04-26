@@ -1,13 +1,15 @@
-import {  createNewNote, deleteNotebyId, getAllNotes, getNotesbyUserID,  updateNotebyId } from "../queryFunctions";
+import { deleteNotebyId,  updateNotebyId } from "../queryFunctions";
 
 import { method } from "../type";
-import {useCreateUser,
+import {
+    useCreateUser,
     useUserLogin,
     useLogout,
     useUpdateUser,
     useChangePassword,
     useGetUserProfile,
-    useGetUserById} from "../hooks/customQueryHooks";
+    useGetUserById, useGetAllContent, useCreateContent, useGetALlContentByUserId
+} from "../hooks/customQueryHooks";
 import { UseMutateFunction } from "@tanstack/react-query";
 
 type ContentData = {
@@ -45,7 +47,7 @@ export const contentData: ContentData[] = [
         method: "GET",
         queryName: "getAllNotes",
         text: "This endpoint returns all notes from the database without authentication.",
-        apiCall: getAllNotes
+        apiCall: useGetAllContent,
     },
     {
         id: 1,
@@ -54,7 +56,7 @@ export const contentData: ContentData[] = [
         method: "POST",
         queryName: "createNote",
         text: "This endpoint allows authenticated users to create a new note.",
-        apiCall: createNewNote,
+        apiCall: useCreateContent,
     },
     {
         id: 2,
@@ -81,7 +83,7 @@ export const contentData: ContentData[] = [
         method: "GET",
         queryName: "seeAllNotesByUserId",
         text: "This endpoint returns all notes created by a specific user, requiring authentication.",
-        apiCall: getNotesbyUserID
+        apiCall: useGetALlContentByUserId,
     },
 
 ];

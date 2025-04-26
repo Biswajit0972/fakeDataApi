@@ -93,7 +93,7 @@ export const useGetNotesByUser = () => {
 
 // START CONTENT HOOKS HERE
 
-export const useGetAllConetent = () => {
+export const useGetAllContent = () => {
     const {isPending, data, isError, error , mutateAsync} = useMutation({
             mutationFn: getAllNotes,
     });
@@ -121,7 +121,7 @@ export const useUpdateContent = () => {
     return { isPending, data, isError, error, mutateAsync };
 }
 
-export const useGetALlNotesByUserId = () => {
+export const useGetALlContentByUserId = () => {
     const {isPending, data, isError, error , mutateAsync} = useMutation({
         mutationFn: createNewNote,
         onSuccess: () => toast.success(" content found successfully"),
