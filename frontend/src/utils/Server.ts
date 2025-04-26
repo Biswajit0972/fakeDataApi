@@ -5,6 +5,6 @@ export const asyncHandler = (fn: () => Promise<unknown>) => async () => {
         return await fn();
     } catch (error) {
         const err = error as AxiosError;
-        throw err.response || err.message;
+        throw err.response?.data || err.message;
     }
 }

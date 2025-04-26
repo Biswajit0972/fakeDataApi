@@ -1,4 +1,4 @@
-import { deleteNotebyId,  updateNotebyId } from "../queryFunctions";
+import { deleteNotebyId, updateNotebyId} from "../queryFunctions";
 
 import { method } from "../type";
 import {
@@ -11,6 +11,7 @@ import {
     useGetUserById, useGetAllContent, useCreateContent, useGetALlContentByUserId
 } from "../hooks/customQueryHooks";
 import { UseMutateFunction } from "@tanstack/react-query";
+
 
 type ContentData = {
     id: number,
@@ -39,11 +40,13 @@ type ContentData2 = {
     useApiCall: () => CustomMutationHook;
 }
 
+
+
 export const contentData: ContentData[] = [
     {
         id: 5,
         title: "Get all notes",
-        url: "axios.get(`https://fake-data-api-backend.vercel.app/v1/getallnotes`)",
+        url: "axios.get(`https://fake-data-api-backend.vercel.app/v1/getallnotes?page=1&limit=10}`)",
         method: "GET",
         queryName: "getAllNotes",
         text: "This endpoint returns all notes from the database without authentication.",
@@ -52,7 +55,8 @@ export const contentData: ContentData[] = [
     {
         id: 1,
         title: "Create a new note",
-        url: "axios.post(`https://fake-data-api-backend.vercel.app/v1/demonote/create`, {content: <add your any data as string format>}, { withCredentials: true })",
+        url: "await axios.post(`https://fake-data-api-backend.vercel.app/v1/demonote/create`, {content: `hey you store new  data here ${Date.now()}`}, {    headers: {\n" +
+            "Authorization: `Bearer ${token}`,\n}});",
         method: "POST",
         queryName: "createNote",
         text: "This endpoint allows authenticated users to create a new note.",
@@ -61,7 +65,7 @@ export const contentData: ContentData[] = [
     {
         id: 2,
         title: "Delete a note",
-        url: "axios.delete(`https://fake-data-api-backend.vercel.app/v1/deletepost?id=<add post id>`,  { withCredentials: true })",
+        url: "axios.delete(`https://fake-data-api-backend.vercel.app/v1/deletepost?id=<add post id>`,  { headers:{Authorization: `Bearer ${token}`} })",
         method: "POST",
         queryName: "deleteNote",
         text: "This endpoint allows authenticated users to delete a specific note by its ID.",
@@ -70,7 +74,7 @@ export const contentData: ContentData[] = [
     {
         id: 3,
         title: "Update a note",
-        url: "axios.update(`https://fake-data-api-backend.vercel.app/v1/updatenote?id=<add note id>`,  { withCredentials: true })",
+        url: "axios.update(`https://fake-data-api-backend.vercel.app/v1/updatenote?id=<add note id>`,  { headers:{Authorization: `Bearer ${token}`} })",
         method: "POST",
         queryName: "updateNote",
         text: "This endpoint allows authenticated users to update a specific note by its ID.",
@@ -79,7 +83,7 @@ export const contentData: ContentData[] = [
     {
         id: 4,
         title: "Get notes by user ID",
-        url: "axios.update(`https://fake-data-api-backend.vercel.app/v1/updatenote?id=<add user id>`,  { withCredentials: true })",
+        url: "axios.update(`https://fake-data-api-backend.vercel.app/v1/updatenote?id=<add user id>`, { headers:{Authorization: `Bearer ${token}`} })",
         method: "GET",
         queryName: "seeAllNotesByUserId",
         text: "This endpoint returns all notes created by a specific user, requiring authentication.",
@@ -120,7 +124,7 @@ export const userContentData: ContentData2[] = [
     {
         id: 2,
         title: "User Login",
-        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/signin', {identifier: <add your username or email>, password: <enter your password>}, {withCreadentionals:  true})",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/signin', {identifier: <add your username or email>, password: <enter your password>}, { headers:{Authorization: `Bearer ${token}`})",
         method: "POST",
         queryName: "loginUser",
         text: "This endpoint allows registered users to log in and receive authentication tokens.",
@@ -129,7 +133,7 @@ export const userContentData: ContentData2[] = [
     {
         id: 3,
         title: "User Logout",
-        url: "axios.get('https://fake-data-api-backend.vercel.app/logout')",
+        url: "axios.get('https://fake-data-api-backend.vercel.app/logout', { headers:{Authorization: `Bearer ${token}`})",
         method: "GET",
         queryName: "logOut",
         text: "This endpoint logs out an authenticated user by clearing the session or token.",
@@ -138,7 +142,7 @@ export const userContentData: ContentData2[] = [
     {
         id: 4,
         title: "Update User Profile",
-        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/updateprofile', {fullname: `roni`,username:  `ronit45`,}, {withCredentials: true})",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/updateprofile', {fullname: `roni`,username:  `ronit45`,}, { headers:{Authorization: `Bearer ${token}`})",
         method: "POST",
         queryName: "updateUser",
         text: "This endpoint allows authenticated users to update their profile details.",
@@ -147,7 +151,7 @@ export const userContentData: ContentData2[] = [
     {
         id: 5,
         title: "Change User Password",
-        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/changepassword')",
+        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/changepassword', { headers:{Authorization: `Bearer ${token}`})",
         method: "POST",
         queryName: "changeUserPassword",
         text: "This endpoint allows authenticated users to change their password securely.",
@@ -156,7 +160,7 @@ export const userContentData: ContentData2[] = [
     {
         id: 6,
         title: "Get User Data",
-        url: "axios.get('https://fake-data-api-backend.vercel.app/v1/getuser')",
+        url: "axios.get('https://fake-data-api-backend.vercel.app/v1/getuser', { headers:{Authorization: `Bearer ${token}`})",
         method: "GET",
         queryName: "getUserData",
         text: "This endpoint retrieves details of the authenticated user.",

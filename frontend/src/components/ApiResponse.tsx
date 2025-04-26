@@ -7,7 +7,8 @@ const ApiResponse: FC<ApiResponseProps> = ({
                                                text,
                                                method = "GET",
                                                url = "https://backend-service-two.vercel.app/v1/getallnotes",
-                                               useApiCall
+                                               useApiCall,
+    queryName
                                            }) => {
 
 
@@ -42,7 +43,7 @@ const ApiResponse: FC<ApiResponseProps> = ({
                 <h1
                     className={`${methodColors(method)} px-3 py-2 rounded-full title-sm`}
                 >
-                    Method: {method}
+                   Task: {queryName}
                 </h1>
                 {/* <h1>{title}</h1> */}
             </div>
@@ -52,7 +53,7 @@ const ApiResponse: FC<ApiResponseProps> = ({
                 </p>
                 <p className="text-[16.4px]">{text}</p>
                 <div className="code-block">
-                    <CodeBlock code={JSON.stringify(url, null, " ")}/>
+                    <CodeBlock code={url}/>
                 </div>
                 <button
                     className="bg-green-500 text-white py-2 px-5 rounded-md cursor-pointer"

@@ -105,25 +105,17 @@ export const useCreateContent = () => {
     const {isPending, data, isError, error , mutateAsync} = useMutation({
         mutationFn: createNewNote,
         onSuccess: () => toast.success("New  data  successfully stored!"),
-        onError: (err) => toast.error(err.message || "Logout failed"),
+        onError: (err) => toast.error(err.message),
     });
 
     return { isPending, data, isError, error, mutateAsync };
 }
 
-export const useUpdateContent = () => {
-    const {isPending, data, isError, error , mutateAsync} = useMutation({
-        mutationFn: createNewNote,
-        onSuccess: () => toast.success("New  data  successfully stored!"),
-        onError: (err) => toast.error(err.message || "Logout failed"),
-    });
 
-    return { isPending, data, isError, error, mutateAsync };
-}
 
 export const useGetALlContentByUserId = () => {
     const {isPending, data, isError, error , mutateAsync} = useMutation({
-        mutationFn: createNewNote,
+        mutationFn: getNotesbyUserID,
         onSuccess: () => toast.success(" content found successfully"),
         onError: (err) => toast.error(err.message || "Logout failed"),
     });

@@ -5,7 +5,7 @@ export interface ApiResponseProps {
     url: string;
     text:  string;
     useApiCall: () => unknown;
-
+    queryName: string;
 }
 export interface ApiResponseProps2 {
     method: method;

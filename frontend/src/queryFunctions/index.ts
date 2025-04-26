@@ -92,7 +92,10 @@ export const getAllNotes = asyncHandler(async () => {
 })
 
 export const createNewNote = asyncHandler(async () => {
-    const res = await axios.post(`https://fake-data-api-backend.vercel.app/v1/demonote/create`, {content: `hey you store new  data here ${Date.now()}`}, {withCredentials: true});
+    const token = localStorage.getItem("auth");
+    const res = await axios.post(`https://fake-data-api-backend.vercel.app/v1/demonote/create`, {content: `hey you store new  data here ${Date.now()}`}, {    headers: {
+            Authorization: `Bearer ${token}`,
+        }});
     return res.data;
 })
 
@@ -105,7 +108,12 @@ export const updateNotebyId = async () => {
 }
 
 export const getNotesbyUserID = asyncHandler(async () => {
-        const res = await axios.get(`https://fake-data-api-backend.vercel.app/v1/seeusernotes?id=67d2469a0643aa381964fb7b`, {withCredentials: true})
+    const token = localStorage.getItem("auth");
+        const res = await axios.get(`https://fake-data-api-backend.vercel.app/v1/seeusernotes?id=67d2469a0643aa381964fb7b`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
         return res.data
     }
 )
