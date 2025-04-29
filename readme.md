@@ -8,47 +8,6 @@ A complete test API for practicing full-stack app development with user authenti
 ```
 https://fake-data-api-backend.vercel.app
 ```
----
-
-## 📂 Table of Contents
-
-- [User Authentication](#user-authentication)
-  - [User Signup](#user-signup)
-  - [User Login](#user-login)
-  - [User Logout](#user-logout)
-  - [Update User Profile](#update-user-profile)
-  - [Change Password](#change-password)
-  - [Get Current User](#get-current-user)
-  - [Get User By ID](#get-user-by-id)
-- [Notes Management](#notes-management)
-  - [Get All Notes](#get-all-notes)
-  - [Create New Note](#create-new-note)
-  - [Get Notes By User ID](#get-notes-by-user-id)
-- [Utilities](#utilities)
-- [Setup Instructions](#setup-instructions)
-
----
----
-
-## 📂 Table of Contents
-
-- [User Authentication](#user-authentication)
-  - [User Signup](#user-signup)
-  - [User Login](#user-login)
-  - [User Logout](#user-logout)
-  - [Update User Profile](#update-user-profile)
-  - [Change Password](#change-password)
-  - [Get Current User](#get-current-user)
-  - [Get User By ID](#get-user-by-id)
-- [Notes Management](#notes-management)
-  - [Get All Notes](#get-all-notes)
-  - [Create New Note](#create-new-note)
-  - [Get Notes By User ID](#get-notes-by-user-id)
-- [Utilities](#utilities)
-- [Setup Instructions](#setup-instructions)
-
----
-
 ## 🧑‍💻 User Authentication
 
 ### ✅ User Signup
@@ -80,9 +39,6 @@ const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin
 });
 localstorage.setItem("auth", res.accessToken); // important do same thing.
 ```
-
----
-
 ### 🚪 User Logout
 
 `GET /v1/logout`
