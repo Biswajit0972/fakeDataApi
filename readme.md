@@ -8,7 +8,6 @@ A complete test API for practicing full-stack app development with user authenti
 ```
 https://fake-data-api-backend.vercel.app
 ```
-
 ---
 
 ## 📂 Table of Contents
@@ -45,9 +44,6 @@ axios.post("https://fake-data-api-backend.vercel.app/v1/signup", {
   email: `test${Date.now()}@gmail.com`,
   password: "12345678"
 });
-```
-
----
 
 ### 🔐 User Login
 
@@ -56,12 +52,13 @@ axios.post("https://fake-data-api-backend.vercel.app/v1/signup", {
 Logs in a user and returns an access token.
 
 ```ts
-axios.post("https://fake-data-api-backend.vercel.app/v1/signin", {
+const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", {
   identifier: "yourUsernameOrEmail",
   password: "12345678"
 }, {
   withCredentials: true
 });
+localstorage.setItem("auth", res.accessToken); // important do same thing.
 ```
 
 ---
