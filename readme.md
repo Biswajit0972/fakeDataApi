@@ -8,6 +8,7 @@ A complete test API for practicing full-stack app development with user authenti
 ```
 https://fake-data-api-backend.vercel.app
 ```
+```
 ## 🧑‍💻 User Authentication
 
 ### ✅ User Signup
