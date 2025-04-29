@@ -24,6 +24,7 @@ axios.post("https://fake-data-api-backend.vercel.app/v1/signup", {
   password: "12345678"
 });
 
+```
 ### 🔐 User Login
 
 `POST /v1/signin`
