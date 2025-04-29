@@ -8,7 +8,7 @@ const Home = () => {
                 <div className="child-box  flex flex-col gap-2">
                     <div className="w-full overflow-hidden flex-between gap-3">
                         <NavLink className="sub-txt text-blue-500" to="https://github.com/Biswajit0972/fakeDataApi/blob/main/readme.md">  <h1 className="title ">
-                            Fake CURD Backend Provider
+                          Github:-  PlayApi
                         </h1></NavLink>
 
 
