@@ -68,11 +68,11 @@ export const useLogout = () => {
 };
 
 export const useGetUserById = () => {
-    const { data: userById, isPending, mutateAsync } = useMutation({
+    const { data, isPending, mutateAsync } = useMutation({
         mutationFn: () => getUserbyId(),
     });
 
-    return { userById, isPending, mutateAsync };
+    return { data, isPending, mutateAsync };
 };
 
 export const useGetUserProfile = () => {
