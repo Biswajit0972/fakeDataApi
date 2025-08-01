@@ -37,7 +37,7 @@ type ContentData2 = {
     text: string,
     queryName: string,
     method: method,
-    useApiCall: () => CustomMutationHook;
+    useApiCall: () => CustomMutationHook
 }
 
 
@@ -151,7 +151,7 @@ export const userContentData: ContentData2[] = [
     {
         id: 5,
         title: "Change User Password",
-        url: "axios.post('https://fake-data-api-backend.vercel.app/v1/changepassword', { headers:{Authorization: `Bearer ${token}`})",
+        url: "axios.post('http://localhost:3000/v1/changepassword', { headers:{Authorization: `Bearer ${token}`})",
         method: "POST",
         queryName: "changeUserPassword",
         text: "This endpoint allows authenticated users to change their password securely.",

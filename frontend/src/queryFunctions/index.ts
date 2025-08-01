@@ -2,6 +2,8 @@ import axios from "axios"
 import {LoginResponse} from "../type";
 import {asyncHandler} from "../utils/Server";
 
+// Users
+
 export const userLogin = asyncHandler(async () => { // working
     const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/signin", {
         identifier: "v234",
@@ -11,7 +13,6 @@ export const userLogin = asyncHandler(async () => { // working
     localStorage.setItem("auth", data.accessToken);
     return data;
 });
-
 
 export const userSignup = asyncHandler(async () => { // working
     const currentUser = Date.now();
@@ -25,9 +26,7 @@ export const userSignup = asyncHandler(async () => { // working
     return res.data;
 })
 
-
 export const userUpdate = asyncHandler(async () => {
-
     return {
         "statusCode": 201,
         "message": "user updated successfully!",
@@ -46,7 +45,6 @@ export const userUpdate = asyncHandler(async () => {
 
 export const userChangePassword = asyncHandler(async () => {
     const token = localStorage.getItem("auth");
-
     const res = await axios.post("https://fake-data-api-backend.vercel.app/v1/changepassword", {
         newPassword: "12345678",
         oldPassword: "12345678"
@@ -67,20 +65,27 @@ export const userProfile = asyncHandler(async () => {
     });
     return res.data;
 })
-export const userLogout = asyncHandler(async () => {
-        const token = localStorage.getItem("auth");
-        const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/logout", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }, withCredentials: true
-        });
-        localStorage.removeItem("auth");
-        return res.data;
-    }
-)
 
-export const getUserbyId = asyncHandler(async () => { // working
-    const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/getuser?id=67d2469a0643aa381964fb7b", {withCredentials: true});
+export const userLogout = asyncHandler(async () => {
+    const token = localStorage.getItem("auth");
+    const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/logout", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }, withCredentials: true
+    });
+    localStorage.removeItem("auth");
+    return res.data;
+})
+
+export const getUserbyId = asyncHandler(async () => {
+    // working
+    const token = localStorage.getItem("auth");
+    const res = await axios.get("https://fake-data-api-backend.vercel.app/v1/getuser?id=688c8c6f4673cb90b54c75ae", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }, withCredentials: true
+    });
+
     return res.data;
 });
 
@@ -109,11 +114,10 @@ export const updateNotebyId = async () => {
 
 export const getNotesbyUserID = asyncHandler(async () => {
     const token = localStorage.getItem("auth");
-        const res = await axios.get(`https://fake-data-api-backend.vercel.app/v1/seeusernotes?id=67d2469a0643aa381964fb7b`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        })
-        return res.data
-    }
-)
+    const res = await axios.get(`https://fake-data-api-backend.vercel.app/v1/seeusernotes?id=67d2469a0643aa381964fb7b`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+    return res.data
+})

@@ -45,7 +45,7 @@ localstorage.setItem("auth", res.accessToken); // important do same thing.
 
 `GET /v1/logout`
 
-Logs out the current user.
+Log out the current user.
 
 ```ts
 axios.get("https://fake-data-api-backend.vercel.app/v1/logout", {

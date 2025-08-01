@@ -8,7 +8,7 @@ const ApiResponse: FC<ApiResponseProps> = ({
                                                method = "GET",
                                                url = "https://backend-service-two.vercel.app/v1/getallnotes",
                                                useApiCall,
-    queryName
+                                               queryName
                                            }) => {
 
 
@@ -18,9 +18,8 @@ const ApiResponse: FC<ApiResponseProps> = ({
         switch (method) {
             case "GET":
                 return "bg-green-500";
-            case "POST": {
+            case "POST":
                 return "bg-blue-500";
-            }
             case "PUT":
                 return "bg-yellow-500";
             case "DELETE":
@@ -34,7 +33,9 @@ const ApiResponse: FC<ApiResponseProps> = ({
 
     // mange api calls based on their methods and url
     const handelCall = async () => {
-        await mutateAsync();
+        if (queryName !== "deleteNote" && queryName !== "updateNote") {
+            await mutateAsync();
+        }
     };
 
     return (
@@ -43,7 +44,7 @@ const ApiResponse: FC<ApiResponseProps> = ({
                 <h1
                     className={`${methodColors(method)} px-3 py-2 rounded-full title-sm`}
                 >
-                   Task: {queryName}
+                    Task: {queryName}
                 </h1>
                 {/* <h1>{title}</h1> */}
             </div>
@@ -63,14 +64,31 @@ const ApiResponse: FC<ApiResponseProps> = ({
                     Run
                 </button>
                 <div className="code-block">
-                    {
-                        isPending ? <div className="h-12 w-full relative p-3 bg-gray-500 text-center mt-5"><h1
-                            className="text-white font-lg">Loading...</h1></div> : <CodeBlock
+                    {isPending ? (
+                        <div className="h-12 w-full relative p-3 bg-gray-500 text-center mt-5">
+                            <h1 className="text-white text-lg">Loading...</h1>
+                        </div>
+                    ) : (queryName === "deleteNote" || queryName === "updateNote") ? (
+                        <CodeBlock
                             language="json"
-                            code={JSON.stringify(data || "", null, " ")}
+                            code={JSON.stringify(
+                                {
+                                    statusCode: 201,
+                                    message: `post ${queryName} Successfully`,
+                                    flag: true,
+                                },
+                                null,
+                                2
+                            )}
                         />
-                    }
+                    ) : (
+                        <CodeBlock
+                            language="json"
+                            code={JSON.stringify(data || "", null, 2)}
+                        />
+                    )}
                 </div>
+
             </div>
         </div>
     );

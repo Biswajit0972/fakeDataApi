@@ -73,12 +73,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         "-refreshToken",
     ]);
     // this cors options works on chrome only
-    const options = {
-        httpOnly: true,
-        secure: process.env.DEV === "production",
-        sameSite: process.env.DEV === "production" ? "None" : "Strict",
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-    };
+
 
     // not sharing cookies because our api will be used as cross site useges, so browser can remove our cookie, this reason our authentication system will be failed.
     res
@@ -104,11 +99,7 @@ export const logOut = asyncHandler(async (req, res) => {
         }
     );
 
-    const options = {
-        httpOnly: true,
-        secure: process.env.DEV === "production",
-        sameSite: process.env.DEV === "production" ? "none" : "strict",
-    };
+
 
     res
         .status(200)
@@ -150,16 +141,19 @@ export const changeUserPassword = asyncHandler(async (req, res) => {
     const userId = req?.user;
     const {newPassword, oldPassword} = req.body;
 
+
     const user = await userModel.findById(userId);
+
 
     if (!user._id) {
         throw new ApiError(401, "You don't have access to the user!");
     }
 
     const isValidUser = await user.isPasswordCorrect(oldPassword);
+    console.log(isValidUser)
 
     if (!isValidUser) {
-        throw new ApiError(401, "You don't have access to the user!");
+        throw new ApiError(401, "invalid credentials!");
     }
 
     user.password = newPassword;
@@ -172,7 +166,7 @@ export const changeUserPassword = asyncHandler(async (req, res) => {
 export const getUserData = asyncHandler(async (req, res) => {
     const userId = req.user;
     const userIDQuery = req.query.id
-    console.log(userIDQuery);
+
     const userProfile = await userModel.aggregate([
         {
             $match: {
